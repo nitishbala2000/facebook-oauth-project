@@ -1,0 +1,15 @@
+.btnFacebook {
+    background: #3B5998 !important;
+    color: #fff !important;
+
+}
+
+.btnFacebook:hover {
+    opacity: 0.8;
+}
+
+.WrapperDiv {
+    margin: 30vh auto;
+    max-width: 500px;
+    text-align: center;
+}
