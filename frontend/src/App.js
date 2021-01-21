@@ -8,14 +8,28 @@ import MainPage from "./components/MainPage/MainPage";
 import { Switch, Route } from "react-router-dom";
 import ErrorPage from './components/ErrorPage/ErrorPage';
 import * as actionCreators from "./store/actionCreators";
+import CustomSpinner from './components/CustomSpinner/CustomSpinner';
 
 class App extends Component {
 
+  state = {
+    initialCheck : true
+  }
+
   componentDidMount() {
 
-    window.addEventListener("beforeunload", (event) => {
-      event.returnValue = "Write something clever here";
-      this.props.logout()
+    window.FB.getLoginStatus(response => {
+      console.log(response);
+      if (response.status === "connected") {
+        console.log(response);
+        const accessToken = response.authResponse.accessToken;
+        const id = response.authResponse.userID;
+        this.props.getJwtToken(accessToken, id, () => {
+          this.setState({initialCheck : false})
+        });
+      } else {
+        this.setState({initialCheck : false});
+      }
     });
 
   }
@@ -24,6 +38,10 @@ class App extends Component {
 
 
   render() {
+
+    if (this.state.initialCheck) {
+      return <CustomSpinner style={{marginTop : "30vh"}}/>
+    }
 
     if (this.props.jwtToken) {
       return (
@@ -58,7 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(actionCreators.logout())
+    getJwtToken : (accessToken, id, callback) => dispatch(actionCreators.getJwtToken(accessToken, id, callback))
   }
 }
 

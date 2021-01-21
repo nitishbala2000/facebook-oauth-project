@@ -3,9 +3,15 @@ import {NavLink} from "react-router-dom";
 import {Navbar, Nav} from "react-bootstrap";
 import {connect} from "react-redux";
 import * as actionCreators from "../../store/actionCreators";
+import {withRouter} from "react-router-dom";
 
 
 class CustomNavBar extends Component {
+
+    onLogoutClicked = () => {
+        this.props.logout();
+        this.props.history.push("/");
+    }
     
     render() {
 
@@ -15,7 +21,7 @@ class CustomNavBar extends Component {
             extraLinks = (
                 <Fragment>
                     <Nav.Link as={NavLink} to="/mainPage" exact>Main Page</Nav.Link>
-                    <Nav.Link as="span" style={{cursor: "pointer"}}>Log out</Nav.Link>
+                    <Nav.Link as="span" style={{cursor: "pointer"}} onClick={this.onLogoutClicked}>Log out</Nav.Link>
                 </Fragment>
             )
         }
@@ -46,4 +52,4 @@ const mapStateToProps = state => {
   }
   
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomNavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomNavBar));

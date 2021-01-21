@@ -2,7 +2,8 @@ import * as actionTypes from "./actionTypes";
 
 
 const initialState = {
-    jwtToken : null
+    jwtToken : null,
+    isLoggingOut : false
 }
 
 const reducer = (state=initialState, action) => {
@@ -19,7 +20,15 @@ const reducer = (state=initialState, action) => {
         case (actionTypes.DISCARD_TOKEN) : {
             return {
                 ...state,
+                isLoggingOut : false,
                 jwtToken : null
+            }
+        }
+
+        case (actionTypes.SET_LOGGING_OUT) : {
+            return {
+                ...state,
+                isLoggingOut: true
             }
         }
 

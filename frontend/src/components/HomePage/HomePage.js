@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import classes from "./HomePage.module.css";
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
@@ -28,7 +28,14 @@ class HomePage extends Component {
         const buttonClasses = ["btn", classes.btnFacebook].join(" ");
 
         let button;
-        if (!this.props.jwtToken) {
+        if (this.props.isLoggingOut) {
+            button = (
+                <button className={buttonClasses}>
+                    {facebookIcon}
+                    <Spinner animation="border" role="status"/>
+                </button>
+            )
+        } else if (!this.props.jwtToken) {
             button = (
                 <button 
                     className={buttonClasses}
@@ -76,6 +83,7 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
+        isLoggingOut : state.isLoggingOut,
         jwtToken : state.jwtToken
     }
 } 

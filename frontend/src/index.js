@@ -25,10 +25,12 @@ function initFacebookSdk() {
           });
 
           // auto authenticate with the api if already logged in with facebook
-          window.FB.getLoginStatus(response => {
-            console.log(response);
-            resolve();
-          });
+          // window.FB.getLoginStatus(response => {
+          //   console.log(response);
+          //   resolve();
+          // });
+
+          resolve();
       };
 
       // load facebook sdk script
