@@ -6,6 +6,7 @@ import CustomNavBar from "./components/CustomNavBar/CustomNavBar";
 import HomePage from "./components/HomePage/HomePage";
 import MainPage from "./components/MainPage/MainPage";
 import {Switch, Route} from "react-router-dom";
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 class App extends Component {
 
@@ -39,10 +40,9 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={HomePage}/>
           <Route path="/mainPage" exact component={MainPage}/>
+          <Route component={ErrorPage}/>
           
         </Switch>
-        
-
       </BrowserRouter>
     )
   }
