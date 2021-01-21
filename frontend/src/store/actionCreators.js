@@ -24,7 +24,12 @@ export const getJwtToken = (accessToken, id, callback) => {
         .then(res => {
 
             const token = res.data;
-            const decodedToken = jwt.verify(token, "secret", {algorithms : ["HS256"]});
+
+            const key = process.env.REACT_APP_JWT_KEY;
+            const algorithm = process.env.REACT_APP_JWT_ALGORITHM;
+            
+            const decodedToken = jwt.verify(token, key , {algorithms : [algorithm]});
+            console.log(decodedToken);
             
             const expiryTime = decodedToken.expiryTime;
             const currentTime = Date.now() / 1000;
