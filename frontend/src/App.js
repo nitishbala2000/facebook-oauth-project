@@ -19,9 +19,7 @@ class App extends Component {
   componentDidMount() {
 
     window.FB.getLoginStatus(response => {
-      console.log(response);
       if (response.status === "connected") {
-        console.log(response);
         const accessToken = response.authResponse.accessToken;
         const id = response.authResponse.userID;
         this.props.getJwtToken(accessToken, id, () => {

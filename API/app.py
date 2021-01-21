@@ -81,7 +81,8 @@ def getJwtToken():
         addUser(userId, name, email)
 
     
-    encodedJwt = jwt.encode({"id" : userId, "expiryTime" : time.time() + 3600}, "secret", algorithm="HS256")
+    #The token will expire in 900 seconds i.e. 15 minutes
+    encodedJwt = jwt.encode({"id" : userId, "expiryTime" : time.time() + 900}, "secret", algorithm="HS256")
     return encodedJwt
 
 @app.route("/getUserInfo", methods=["GET"])
@@ -90,4 +91,10 @@ def getUserInfo():
     encodedJwt = request.args["jwtToken"]
     decoded = jwt.decode(encodedJwt, key="secret", algorithms=["HS256"])
     userId = decoded["id"]
+    expiryTime = decoded["expiryTime"]
+
+    if time.time() > expiryTime:
+        #token expired
+        return "Token expired", 400
+
     return jsonify(getUser(userId))
